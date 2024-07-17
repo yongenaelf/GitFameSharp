@@ -1,0 +1,34 @@
+name: .NET Core
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: [ 'AElfProject/AElf' ]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0
+      - name: Build
+        run: dotnet build -o out
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.repo }}
+          path: repo
+      - run: dotnet out/GitFameSharp.dll --GitDir="repo"
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.repo }}
+          path: |
+            result.csv
