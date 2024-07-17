@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0
       - name: Build
@@ -25,9 +25,7 @@ jobs:
         with:
           repository: ${{ matrix.repo }}
           path: repo
-      - run: |
-          cd repo
-          dotnet ../bin/Debug/net8.0/GitFameSharp.dll/GitFameSharp.dll
+      - run: cd repo && dotnet ../bin/Debug/net8.0/GitFameSharp.dll/GitFameSharp.dll
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
