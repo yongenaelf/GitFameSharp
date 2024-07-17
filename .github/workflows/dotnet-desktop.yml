@@ -25,10 +25,11 @@ jobs:
         with:
           repository: ${{ matrix.repo }}
           path: repo
+          fetch-depth: 0
       - run: cd repo && dotnet ../GitFameSharp/bin/Release/net8.0/GitFameSharp.dll
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.repo }}
           path: |
-            result.csv
+            repo/result.csv
