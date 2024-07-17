@@ -20,12 +20,12 @@ jobs:
         with:
           dotnet-version: 8.0
       - name: Build
-        run: dotnet build
+        run: dotnet build --configuration Release GitFameSharp
       - uses: actions/checkout@v4
         with:
           repository: ${{ matrix.repo }}
           path: repo
-      - run: dotnet GitFameSharp/bin/Debug/net8.0/GitFameSharp.dll
+      - run: cd repo && dotnet ../GitFameSharp/bin/Release/net8.0/GitFameSharp.dll
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
